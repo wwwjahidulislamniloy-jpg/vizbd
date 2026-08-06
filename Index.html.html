@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vizento Studio BD - Creative Graphic Designer &amp; Brand Identity Specialist</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet" />
+    <!-- AOS Animation Library CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6', // Blue
+                        secondary: '#1E40AF', // Darker Blue
+                        darkBg: '#0f172a', // Very dark blue/black
+                        darkCard: '#1e293b', // Slightly lighter dark
+                        textLight: '#f8fafc',
+                        textMuted: '#94a3b8'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3B82F6;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1E40AF;
+        }
+
+        /* Nav Link Hover Effect */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #3B82F6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Portfolio Image Hover */
+        .portfolio-item {
+            overflow: hidden;
+        }
+        .portfolio-item img {
+            transition: transform 0.5s ease;
+        }
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        .portfolio-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        /* Lightbox styles */
+        #lightbox {
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold text-white flex items-center gap-2">
+                        <img src="Logo.jpg_2.jpeg" onerror="if(!this.dataset.step){this.dataset.step=1;this.src='Logo.jpg.jpeg';}else if(this.dataset.step=='1'){this.dataset.step=2;this.src='Logo.jpg';}else{this.src='https://placehold.co/200x200/3B82F6/ffffff?text=Vizento+Logo';}" alt="Vizento Studio Logo" class="h-10 w-auto rounded-lg object-contain bg-white p-0.5" />
+                        Vizento Studio BD
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                    <a href="#about" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">About</a>
+                    <a href="#services" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Services</a>
+                    <a href="#portfolio" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Portfolio</a>
+                    <a href="#contact" class="bg-primary hover:bg-secondary text-white px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg shadow-primary/30 transform hover:-translate-y-1">Hire Me</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-darkCard absolute w-full border-b border-gray-800 shadow-xl">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Home</a>
+                <a href="#about" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">About</a>
+                <a href="#services" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Services</a>
+                <a href="#portfolio" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Portfolio</a>
+                <a href="#contact" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-blue-400">Hire Me</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-1/3 right-10 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 text-center md:text-left pt-10 md:pt-0" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="mb-4 inline-block bg-white p-3 rounded-2xl shadow-xl shadow-blue-500/10 border border-gray-200">
+                        <img src="Logo.jpg_2.jpeg" onerror="if(!this.dataset.step){this.dataset.step=1;this.src='Logo.jpg.jpeg';}else if(this.dataset.step=='1'){this.dataset.step=2;this.src='Logo.jpg';}else{this.src='https://placehold.co/200x200/3B82F6/ffffff?text=Vizento+Logo';}" alt="Vizento Studio Main Logo" class="h-16 md:h-20 w-auto object-contain mx-auto md:mx-0" />
+                    </div>
+                    <p class="text-primary font-semibold tracking-wide uppercase mb-3">Welcome to Vizento Studio BD</p>
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
+                        Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Jahidul Islam Niloy</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl text-gray-300 mb-6 font-light">Creative Graphic Designer &amp; Brand Identity Specialist</h2>
+                    <p class="text-gray-400 mb-8 max-w-lg mx-auto md:mx-0 text-lg">
+                        I craft visually stunning designs that communicate your brand's message effectively and leave a lasting impression.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#portfolio" class="bg-primary hover:bg-secondary text-white px-8 py-3 rounded-full font-semibold transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2 group">
+                            View Portfolio <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#contact" class="bg-transparent border-2 border-gray-600 hover:border-primary hover:text-primary text-white px-8 py-3 rounded-full font-semibold transition-all flex items-center justify-center">
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Image -->
+                <div class="w-full md:w-1/2 flex justify-center mt-12 md:mt-0" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="relative w-72 h-72 md:w-96 md:h-96">
+                        <div class="absolute inset-0 border-4 border-primary rounded-full transform translate-x-4 translate-y-4 -z-10"></div>
+                        <img src="profile.jpg_2.jpeg" onerror="if(!this.dataset.step){this.dataset.step=1;this.src='profile.jpg.jpeg';}else if(this.dataset.step=='1'){this.dataset.step=2;this.src='profile.jpg';}else{this.src='https://placehold.co/400x400/1e293b/3B82F6?text=Profile+Photo';}" alt="Jahidul Islam Niloy" class="rounded-full w-full h-full object-cover shadow-2xl border-4 border-darkBg relative z-10 grayscale hover:grayscale-0 transition-all duration-500 object-top" />
+                        
+                        <div class="absolute -bottom-4 -left-4 bg-darkCard p-3 rounded-xl shadow-lg border border-gray-800 z-20 flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
+                            <i class="fab fa-adobe text-red-500 text-2xl"></i>
+                            <div>
+                                <p class="text-xs text-gray-400">Expert in</p>
+                                <p class="text-sm font-bold">Adobe CC</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-10 -right-6 bg-darkCard p-3 rounded-xl shadow-lg border border-gray-800 z-20 flex items-center gap-3 animate-bounce" style="animation-duration: 4s;">
+                            <i class="fas fa-star text-yellow-400 text-2xl"></i>
+                            <div>
+                                <p class="text-xs text-gray-400">Experience</p>
+                                <p class="text-sm font-bold">5+ Years</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-gray-400 hover:text-primary transition-colors animate-bounce">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-darkCard relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">About Me</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">Get to know the person behind the designs.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <!-- About Image -->
+                <div class="w-full md:w-5/12" data-aos="fade-right">
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <img src="profile.jpg_2.jpeg" onerror="if(!this.dataset.step){this.dataset.step=1;this.src='profile.jpg.jpeg';}else if(this.dataset.step=='1'){this.dataset.step=2;this.src='profile.jpg';}else{this.src='https://placehold.co/600x800/1e293b/3B82F6?text=Profile+Photo';}" alt="Jahidul Islam Niloy Working" class="w-full h-[500px] object-cover object-top transform group-hover:scale-105 transition-transform duration-500" />
+                        <div class="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- About Content -->
+                <div class="w-full md:w-7/12" data-aos="fade-left">
+                    <h3 class="text-2xl font-bold text-white mb-4">I'm <span class="text-primary">Jahidul Islam Niloy</span>, a Professional Graphic Designer based in Bangladesh.</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        With a passion for aesthetics and a keen eye for detail, I specialize in translating complex ideas into compelling visual narratives. At Vizento Studio BD, I focus on creating modern, scalable, and impactful designs that help businesses establish a strong brand presence.
+                    </p>
+                    
+                    <!-- Stats/Experience -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8 border-y border-gray-700 py-6">
+                        <div class="text-center">
+                            <h4 class="text-3xl font-bold text-primary mb-1">5+</h4>
+                            <p class="text-sm text-gray-400">Years Experience</p>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="text-3xl font-bold text-primary mb-1">200+</h4>
+                            <p class="text-sm text-gray-400">Projects Done</p>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="text-3xl font-bold text-primary mb-1">150+</h4>
+                            <p class="text-sm text-gray-400">Happy Clients</p>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="text-3xl font-bold text-primary mb-1">10+</h4>
+                            <p class="text-sm text-gray-400">Awards Won</p>
+                        </div>
+                    </div>
+
+                    <!-- Software Skills -->
+                    <h4 class="text-lg font-semibold text-white mb-4">Software Proficiency</h4>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center gap-2 bg-darkBg px-4 py-2 rounded-lg border border-gray-700 hover:border-primary transition-colors cursor-default">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="Photoshop" class="w-6 h-6" />
+                            <span class="text-sm font-medium">Photoshop</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-darkBg px-4 py-2 rounded-lg border border-gray-700 hover:border-primary transition-colors cursor-default">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg" alt="Illustrator" class="w-6 h-6" />
+                            <span class="text-sm font-medium">Illustrator</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-darkBg px-4 py-2 rounded-lg border border-gray-700 hover:border-primary transition-colors cursor-default">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Figma" class="w-6 h-6" />
+                            <span class="text-sm font-medium">Figma</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-darkBg px-4 py-2 rounded-lg border border-gray-700 hover:border-primary transition-colors cursor-default">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Canva_icon_2021.svg" alt="Canva" class="w-6 h-6" />
+                            <span class="text-sm font-medium">Canva</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">My Services</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">Comprehensive design solutions to elevate your brand's visual identity.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 hover:border-primary/50 hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                        <i class="fas fa-pen-nib text-2xl text-primary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Logo Design</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Unique, memorable, and timeless logo designs that capture the essence of your business and resonate with your audience.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 hover:border-primary/50 hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                        <i class="fas fa-fingerprint text-2xl text-primary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Brand Identity</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Complete branding packages including color palettes, typography, and visual guidelines to ensure brand consistency.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 hover:border-primary/50 hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                        <i class="fas fa-share-nodes text-2xl text-primary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Social Media Design</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Engaging social media posts, covers, and ad creatives designed to stop the scroll and drive engagement.</p>
+                </div>
+                <!-- Service 4 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 hover:border-primary/50 hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                        <i class="fas fa-print text-2xl text-primary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Print Design</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">High-quality print materials including flyers, brochures, posters, and business cards ready for production.</p>
+                </div>
+                <!-- Service 5 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 hover:border-primary/50 hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                        <i class="fas fa-box-open text-2xl text-primary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Packaging Design</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Attractive and functional product packaging that stands out on the shelves and appeals to your target market.</p>
+                </div>
+                <!-- Service 6 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 hover:border-primary/50 hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                        <i class="fas fa-image text-2xl text-primary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Custom Graphics</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Banners, YouTube thumbnails, vector tracing, and any bespoke graphic design requirements you might have.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-darkCard relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">My Portfolio</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">A showcase of my recent creative works.</p>
+            </div>
+
+            <!-- Portfolio Filters -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12" data-aos="fade-up" data-aos-delay="100">
+                <button class="filter-btn active px-6 py-2 rounded-full border border-primary bg-primary text-white text-sm font-medium transition-colors" data-filter="all">All</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-primary hover:text-white text-sm font-medium transition-colors" data-filter="logo">Logo</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-primary hover:text-white text-sm font-medium transition-colors" data-filter="social">Social Media</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-primary hover:text-white text-sm font-medium transition-colors" data-filter="print">Print (Flyer/Card)</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-primary hover:text-white text-sm font-medium transition-colors" data-filter="packaging">Packaging</button>
+            </div>
+
+            <!-- Portfolio Gallery -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-gallery">
+                <!-- Project 1: Logo -->
+                <div class="portfolio-item rounded-xl bg-darkBg border border-gray-800 relative group cursor-pointer" data-category="logo" data-aos="fade-up">
+                    <img src="https://placehold.co/800x600/1e293b/3B82F6?text=Modern+Logo+Design" alt="Logo Design" class="w-full h-64 object-cover" />
+                    <div class="portfolio-overlay absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/80 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-primary text-sm font-medium mb-1">Logo Design</span>
+                        <h4 class="text-white text-lg font-bold">Tech Brand Identity</h4>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-primary rounded-full flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Social Media -->
+                <div class="portfolio-item rounded-xl bg-darkBg border border-gray-800 relative group cursor-pointer" data-category="social" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://placehold.co/800x600/1e293b/10b981?text=Social+Media+Post" alt="Social Media Design" class="w-full h-64 object-cover" />
+                    <div class="portfolio-overlay absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/80 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-primary text-sm font-medium mb-1">Social Media</span>
+                        <h4 class="text-white text-lg font-bold">Fitness Campaign</h4>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-primary rounded-full flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Print -->
+                <div class="portfolio-item rounded-xl bg-darkBg border border-gray-800 relative group cursor-pointer" data-category="print" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://placehold.co/600x800/1e293b/f59e0b?text=Event+Flyer" alt="Flyer Design" class="w-full h-64 object-cover object-top" />
+                    <div class="portfolio-overlay absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/80 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-primary text-sm font-medium mb-1">Print Design</span>
+                        <h4 class="text-white text-lg font-bold">Corporate Event Flyer</h4>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-primary rounded-full flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Packaging -->
+                <div class="portfolio-item rounded-xl bg-darkBg border border-gray-800 relative group cursor-pointer" data-category="packaging" data-aos="fade-up">
+                    <img src="https://placehold.co/800x600/1e293b/ef4444?text=Product+Packaging" alt="Packaging Design" class="w-full h-64 object-cover" />
+                    <div class="portfolio-overlay absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/80 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-primary text-sm font-medium mb-1">Packaging</span>
+                        <h4 class="text-white text-lg font-bold">Coffee Box Design</h4>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-primary rounded-full flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Logo -->
+                <div class="portfolio-item rounded-xl bg-darkBg border border-gray-800 relative group cursor-pointer" data-category="logo" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://placehold.co/800x600/1e293b/8b5cf6?text=Minimal+Logo" alt="Logo Design" class="w-full h-64 object-cover" />
+                    <div class="portfolio-overlay absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/80 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-primary text-sm font-medium mb-1">Logo Design</span>
+                        <h4 class="text-white text-lg font-bold">Minimalist Monogram</h4>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-primary rounded-full flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Social Media -->
+                <div class="portfolio-item rounded-xl bg-darkBg border border-gray-800 relative group cursor-pointer" data-category="social" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://placehold.co/1280x720/1e293b/ec4899?text=YT+Thumbnail" alt="Thumbnail Design" class="w-full h-64 object-cover" />
+                    <div class="portfolio-overlay absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/80 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-primary text-sm font-medium mb-1">Social Media</span>
+                        <h4 class="text-white text-lg font-bold">YouTube Thumbnail</h4>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-primary rounded-full flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-400 text-sm">More projects can be easily added to the HTML structure.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">Client Feedback</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 relative" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-quote-left text-4xl text-gray-700 absolute top-6 right-6 opacity-50"></i>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://placehold.co/100x100/3B82F6/ffffff?text=C1" alt="Client" class="w-14 h-14 rounded-full" />
+                        <div>
+                            <h4 class="text-white font-bold">John Doe</h4>
+                            <p class="text-primary text-sm">CEO, TechStart</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed italic">"Vizento Studio BD completely transformed our brand identity. The new logo and marketing materials are top-notch. Highly recommended for any design needs!"</p>
+                    <div class="mt-4 text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 relative" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-quote-left text-4xl text-gray-700 absolute top-6 right-6 opacity-50"></i>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://placehold.co/100x100/10b981/ffffff?text=C2" alt="Client" class="w-14 h-14 rounded-full" />
+                        <div>
+                            <h4 class="text-white font-bold">Sarah Smith</h4>
+                            <p class="text-primary text-sm">Marketing Manager</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed italic">"Amazing social media graphics! Since we started using designs from Vizento, our engagement rates have skyrocketed. Very professional and fast delivery."</p>
+                    <div class="mt-4 text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-darkCard p-8 rounded-2xl border border-gray-800 relative" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-quote-left text-4xl text-gray-700 absolute top-6 right-6 opacity-50"></i>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://placehold.co/100x100/f59e0b/ffffff?text=C3" alt="Client" class="w-14 h-14 rounded-full" />
+                        <div>
+                            <h4 class="text-white font-bold">Ahmed Rahman</h4>
+                            <p class="text-primary text-sm">Local Business Owner</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed italic">"Great experience working together on my product packaging. Communicative, open to revisions, and delivered a beautiful final product that stands out."</p>
+                    <div class="mt-4 text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-darkCard relative border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">Let's Work Together</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">Have a project in mind? Reach out and let's discuss how I can help bring your ideas to life.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Contact Info & Map -->
+                <div class="w-full lg:w-5/12" data-aos="fade-right">
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-darkBg border border-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 text-primary">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Email</h4>
+                                <a href="mailto:www.jahidulcontact@gmail.com" class="text-gray-400 hover:text-primary transition-colors">www.jahidulcontact@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-darkBg border border-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 text-green-500">
+                                <i class="fab fa-whatsapp text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">WhatsApp</h4>
+                                <a href="https://wa.me/8801643389040" target="_blank" class="text-gray-400 hover:text-green-500 transition-colors">01643389040</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-darkBg border border-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 text-blue-500">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Facebook Page</h4>
+                                <a href="https://www.facebook.com/profile.php?id=61592377471942" target="_blank" class="text-gray-400 hover:text-blue-500 transition-colors">Vizento Studio BD</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-darkBg border border-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 text-red-500">
+                                <i class="fas fa-map-marker-alt text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Location</h4>
+                                <p class="text-gray-400">Ashuganj, Bangladesh</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Placeholder -->
+                    <div class="w-full h-48 bg-darkBg rounded-xl border border-gray-700 overflow-hidden relative group">
+                        <img src="https://placehold.co/600x300/1e293b/64748b?text=Google+Maps+Ashuganj" alt="Map" class="w-full h-full object-cover opacity-60" />
+                        <div class="absolute inset-0 flex items-center justify-center">
+                             <a href="https://maps.google.com" target="_blank" class="px-4 py-2 bg-darkCard/80 backdrop-blur text-white text-sm rounded-lg border border-gray-600 hover:border-primary transition-colors">Open in Maps</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="w-full lg:w-7/12" data-aos="fade-left">
+                    <form id="contact-form" class="bg-darkBg p-8 rounded-2xl border border-gray-800 space-y-6">
+                        <div id="form-status" class="hidden p-4 rounded-xl text-center text-sm font-medium transition-all duration-300"></div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm text-gray-400 font-medium">Your Name</label>
+                                <input type="text" required="required" class="w-full bg-darkCard border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors" placeholder="John Doe" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm text-gray-400 font-medium">Your Email</label>
+                                <input type="email" required="required" class="w-full bg-darkCard border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors" placeholder="john@example.com" />
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm text-gray-400 font-medium">Subject</label>
+                            <input type="text" required="required" class="w-full bg-darkCard border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors" placeholder="Project Inquiry" />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm text-gray-400 font-medium">Message</label>
+                            <textarea required="required" rows="5" class="w-full bg-darkCard border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary hover:bg-secondary text-white font-semibold py-4 rounded-lg transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2">
+                            Send Message <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#0b1121] py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <!-- Footer Logo -->
+            <div class="flex items-center gap-2">
+                 <img src="Logo.jpg_2.jpeg" onerror="if(!this.dataset.step){this.dataset.step=1;this.src='Logo.jpg.jpeg';}else if(this.dataset.step=='1'){this.dataset.step=2;this.src='Logo.jpg';}else{this.src='https://placehold.co/200x200/3B82F6/ffffff?text=Vizento+Logo';}" alt="Vizento Studio Logo" class="h-9 w-auto rounded-lg object-contain bg-white p-0.5" />
+                 <span class="text-xl font-bold text-white">Vizento Studio BD</span>
+            </div>
+            
+            <!-- Copyright -->
+            <p class="text-gray-500 text-sm">
+                &#169; <span id="year"></span> Vizento Studio BD. All rights reserved.
+            </p>
+
+            <!-- Social Links -->
+            <div class="flex gap-4">
+                <a href="https://www.facebook.com/profile.php?id=61592377471942" target="_blank" class="w-10 h-10 bg-darkCard border border-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="w-10 h-10 bg-darkCard border border-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all">
+                    <i class="fab fa-behance"></i>
+                </a>
+                <a href="#" class="w-10 h-10 bg-darkCard border border-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all">
+                    <i class="fab fa-dribbble"></i>
+                </a>
+                <a href="#" class="w-10 h-10 bg-darkCard border border-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white hover:text-primary text-3xl focus:outline-none">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Enlarged Portfolio Image" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl" />
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Initialize AOS Animations
+            AOS.init({
+                once: true,
+                offset: 50,
+            });
+
+            // 2. Set current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // 3. Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('bg-darkBg/90', 'backdrop-blur-md', 'shadow-lg', 'border-b', 'border-gray-800');
+                    navbar.classList.remove('py-2');
+                } else {
+                    navbar.classList.remove('bg-darkBg/90', 'backdrop-blur-md', 'shadow-lg', 'border-b', 'border-gray-800');
+                    navbar.classList.add('py-2');
+                }
+            });
+
+            // 4. Mobile Menu Toggle
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                const icon = btn.querySelector('i');
+                if (menu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                    btn.querySelector('i').classList.remove('fa-times');
+                    btn.querySelector('i').classList.add('fa-bars');
+                });
+            });
+
+            // 5. Portfolio Filtering
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-primary', 'text-white', 'border-primary');
+                        b.classList.add('text-gray-300', 'border-gray-600');
+                    });
+                    
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('text-gray-300', 'border-gray-600');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    portfolioItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            }, 50);
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // 6. Lightbox functionality
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            portfolioItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const imgSrc = item.querySelector('img').src;
+                    lightboxImg.src = imgSrc;
+                    lightbox.classList.remove('hidden');
+                    lightbox.classList.add('flex');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            const closeLightbox = () => {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            };
+
+            closeBtn.addEventListener('click', closeLightbox);
+            
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                    closeLightbox();
+                }
+            });
+
+            // 7. Contact Form Handler (No alert())
+            const contactForm = document.getElementById('contact-form');
+            const formStatus = document.getElementById('form-status');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                formStatus.textContent = 'Thank you! Your message has been sent successfully.';
+                formStatus.className = 'p-4 rounded-xl text-center text-sm font-medium transition-all duration-300 bg-green-500/20 border border-green-500 text-green-400 block mb-4';
+                contactForm.reset();
+
+                setTimeout(() => {
+                    formStatus.classList.add('hidden');
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
